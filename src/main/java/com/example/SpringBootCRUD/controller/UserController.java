@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -16,45 +15,45 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping()
+    @GetMapping("/users")
     public String index(Model model) {
         model.addAttribute("users", userService.getAllUsers());
-        return "templates/users_table";
+        return "users/user_table";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/users/{id}")
     public String show(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "templates/user";
+        return "users/user";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/users/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "templates/user_new";
+        return "users/user_new";
     }
 
-    @PostMapping()
+    @PostMapping("/users")
     public String createUser(@ModelAttribute("user") User user) {
         userService.add(user);
-        return "redirect:/templates";
+        return "redirect:/users";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/users/{id}/edit")
     public String createUser(@PathVariable("id") long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
-        return "templates/user_edit";
+        return "users/user_edit";
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/users/{id}")
     public String updateUser(@PathVariable("id") long id,
                              @ModelAttribute("user") User user) {
         userService.update(id, user);
-        return "redirect:/templates";
+        return "redirect:/users";
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") long id) {
         userService.delete(id);
-        return "redirect:/templates";
+        return "redirect:/users";
     }
 }
