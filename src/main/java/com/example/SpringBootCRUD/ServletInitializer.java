@@ -13,16 +13,4 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(SpringBootCrudApplication.class);
 	}
-
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		super.onStartup(servletContext);
-		registerHiddenFieldFilter(servletContext);
-	}
-
-	private void registerHiddenFieldFilter(ServletContext aContext) {
-		aContext.addFilter("hiddenHttpMethodFilter",
-				new HiddenHttpMethodFilter()).addMappingForUrlPatterns(null ,true, "/*");
-	}
-
 }
